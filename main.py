@@ -53,7 +53,6 @@ def login():
             return redirect(url_for('biblioteca'))
         if not usuario or not check_password_hash(usuario.senha, senha):
             return render_template('login.html', info='E-mail ou senha inválidos.')
-        # Realiza o login do usuário
         else:
             return 'Nome de usuário ou senha inválidos'
 
