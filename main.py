@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_uploads import UploadSet, configure_uploads, AUDIO
+import pylance
 import datetime
 
 app = Flask(__name__)
@@ -44,8 +46,12 @@ def login():
         if usuario and usuario.senha == senha:
             login_user(usuario)
             return redirect(url_for('biblioteca'))
+        if not usuario or not check_password_hash(usuario.senha, senha):
+            return render_template('login.html', info='E-mail ou senha inválidos.')
+        # Realiza o login do usuário
         else:
             return 'Nome de usuário ou senha inválidos'
+
     return render_template('login.html')
 
 @app.route('/logout')
@@ -53,6 +59,35 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    """Register user"""
+    if request.method == "POST":
+
+        nome_usuario = request.form.get("nome_usuario")
+        senha = request.form.get("senha")
+        confirmation = request.form.get("confirmation")
+
+        if not nome_usuario:
+            return render_template("register.html", info='Deve fornecer Nome de Usuário.')
+        elif not senha:
+            return render_template("register.html", info='Deve fornecer senha.')
+        elif not confirmation:
+            return render_template("register.html", info="Confirme a senha.")
+
+        if senha != confirmation:
+            return render_template("register.html", info="Senhas estão diferentes.")
+
+        try:
+            hash = generate_password_hash(senha)
+            db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", nome_usuario, hash)
+            return redirect("/")
+        except:
+            return render_template("register.html", info="Nome de Usuário já usado.")
+
+    else:
+        return render_template("register.html")
 
 @app.route('/biblioteca')
 @login_required
