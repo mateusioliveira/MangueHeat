@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_uploads import UploadSet, configure_uploads, AUDIO
+import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'sua_chave_secreta'
