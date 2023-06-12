@@ -3,7 +3,6 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_uploads import UploadSet, configure_uploads, AUDIO
-import pylance
 import datetime
 
 app = Flask(__name__)
@@ -81,11 +80,11 @@ def register():
 
         try:
             hash = generate_password_hash(senha)
-            db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", nome_usuario, hash)
-            return redirect("/")
+            db.session.add("INSERT INTO users (username, hash) VALUES (?, ?)", nome_usuario, hash)
+            db.session.commit()
+            return redirect(url_for('index'))
         except:
             return render_template("register.html", info="Nome de Usuário já usado.")
-
     else:
         return render_template("register.html")
 
