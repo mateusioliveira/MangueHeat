@@ -42,6 +42,12 @@ def login():
         nome_usuario = request.form['nome_usuario']
         senha = request.form['senha']
         usuario = Usuario.query.filter_by(nome_usuario=nome_usuario).first()
+        
+        if not nome_usuario:
+            return render_template("register.html", info='Deve fornecer nome de Usuário.')
+        elif not senha:
+            return render_template("register.html", info='Deve fornecer senha.')
+        
         if usuario and usuario.senha == senha:
             login_user(usuario)
             return redirect(url_for('biblioteca'))
