@@ -26,7 +26,8 @@ configure_uploads(app, audio_uploads)
 con = sqlite3.connect("users.db")
 cursor = con.cursor()
 
-cursor.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, hash TEXT NOT NULL); CREATE UNIQUE INDEX username ON users (username);')
+cursor.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, hash TEXT NOT NULL);')
+cursor.execute('CREATE UNIQUE INDEX IF NOT EXISTS username ON users (username);')
 
 # Modelos
 class Usuario(db.Model):
