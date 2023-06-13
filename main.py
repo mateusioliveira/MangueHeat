@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_uploads import UploadSet, configure_uploads, AUDIO
 import datetime
 import sqlite3
-from flask_session import Session
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'sua_chave_secreta'
@@ -14,7 +14,7 @@ app.config['UPLOADED_AUDIO_DEST'] = 'caminho_para_o_diretorio_de_upload'
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
+
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -64,8 +64,9 @@ def login():
             return render_template("login.html", info='Deve fornecer senha.')
         
         colunas = cursor.execute("SELECT * FROM users WHERE username = ?", username)
+        coluna = colunas.fetchone()
         
-        if len(colunas) != 1 or not check_password_hash(colunas[0]["hash"], senha):
+        if not coluna or not check_password_hash(row[2], senha):
             return render_template("login.html", info='Credenciais inválidas')
 
         session["user_id"] = colunas[0]["id"]
@@ -103,7 +104,7 @@ def register():
 
         try:
             hash = generate_password_hash(senha)
-            cursor.execute("INSERT INTO users (username, hash) VALUES (?, ?)", username, hash)
+            cursor.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, hash))
             return redirect("/")
         except:
             return render_template("register.html", info="Nome de usuário já existente.")
