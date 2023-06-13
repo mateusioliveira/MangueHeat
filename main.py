@@ -50,26 +50,26 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    
+
     session.clear()
-    
+
     if request.method == 'POST':
-        
+
         username = request.form.get("username")
         senha = request.form.get('senha')
-        
+
         if not username:
             return render_template("login.html", info='Deve fornecer nome de usuário.')
         elif not senha:
             return render_template("login.html", info='Deve fornecer senha.')
-        
+
         colunas = cursor.execute("SELECT * FROM users WHERE username = ?", username)
         coluna = colunas.fetchone()
-        
-        if not coluna or not check_password_hash(row[2], senha):
+
+        if not coluna or not check_password_hash(coluna[2], senha):
             return render_template("login.html", info='Credenciais inválidas')
 
-        session["user_id"] = colunas[0]["id"]
+        session["user_id"] = colunas[0]
 
         return redirect("/")
 
@@ -105,9 +105,10 @@ def register():
         try:
             hash = generate_password_hash(senha)
             cursor.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, hash))
+            con.commit()
             return redirect("/")
         except:
-            return render_template("register.html", info="Nome de usuário já existente.")
+            return render_template("register.html", info="Nome de usuário já existe.")
     else:
         return render_template("register.html")
 
