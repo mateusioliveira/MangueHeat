@@ -1,14 +1,20 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_uploads import UploadSet, configure_uploads, AUDIO
 import datetime
+import sqlite3
+from flask_session import Session
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'sua_chave_secreta'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sua_URI_do_banco_de_dados'
 app.config['UPLOADED_AUDIO_DEST'] = 'caminho_para_o_diretorio_de_upload'
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -16,6 +22,11 @@ login_manager.login_view = 'login'
 db = SQLAlchemy(app)
 audio_uploads = UploadSet('audio', AUDIO)
 configure_uploads(app, audio_uploads)
+
+con = sqlite3.connect("users.db")
+cursor = con.cursor()
+
+cursor.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, hash TEXT NOT NULL); CREATE UNIQUE INDEX username ON users (username);')
 
 # Modelos
 class Usuario(db.Model):
@@ -38,43 +49,49 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    
+    session.clear()
+    
     if request.method == 'POST':
-        nome_usuario = request.form['nome_usuario']
-        senha = request.form['senha']
-        usuario = Usuario.query.filter_by(nome_usuario=nome_usuario).first()
         
-        if not nome_usuario:
-            return render_template("login.html", info='Deve fornecer nome de Usuário.')
+        username = request.form.get("username")
+        senha = request.form.get('senha')
+        
+        if not username:
+            return render_template("login.html", info='Deve fornecer nome de usuário.')
         elif not senha:
             return render_template("login.html", info='Deve fornecer senha.')
         
-        if usuario and usuario.senha == senha:
-            login_user(usuario)
-            return redirect(url_for('biblioteca'))
-        if not usuario or not check_password_hash(usuario.senha, senha):
-            return render_template('login.html', info='E-mail ou senha inválidos.')
-        else:
-            return 'Nome de usuário ou senha inválidos'
+        colunas = cursor.execute("SELECT * FROM users WHERE username = ?", username)
+        
+        if len(colunas) != 1 or not check_password_hash(colunas[0]["hash"], senha):
+            return render_template("login.html", info='Credenciais inválidas')
 
-    return render_template('login.html')
+        session["user_id"] = colunas[0]["id"]
+
+        return redirect("/")
+
+    else:
+        return render_template('login.html')
 
 @app.route('/logout')
 @login_required
 def logout():
+    
     logout_user()
-    return redirect(url_for('index'))
+    
+    return redirect("/")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    """Register user"""
     if request.method == "POST":
 
-        nome_usuario = request.form.get("nome_usuario")
+        username = request.form.get("username")
         senha = request.form.get("senha")
         confirmation = request.form.get("confirmation")
 
-        if not nome_usuario:
-            return render_template("register.html", info='Deve fornecer Nome de Usuário.')
+        if not username:
+            return render_template("register.html", info='Deve fornecer nome de usuário.')
         elif not senha:
             return render_template("register.html", info='Deve fornecer senha.')
         elif not confirmation:
@@ -85,11 +102,10 @@ def register():
 
         try:
             hash = generate_password_hash(senha)
-            db.session.add("INSERT INTO users (username, hash) VALUES (?, ?)", nome_usuario, hash)
-            db.session.commit()
-            return redirect(url_for('index'))
+            cursor.execute("INSERT INTO users (username, hash) VALUES (?, ?)", username, hash)
+            return redirect("/")
         except:
-            return render_template("register.html", info="Nome de Usuário já usado.")
+            return render_template("register.html", info="Nome de usuário já existente.")
     else:
         return render_template("register.html")
 
