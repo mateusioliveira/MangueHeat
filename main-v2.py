@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, session
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask_login import login_required
 import sqlite3
 
 
@@ -78,10 +79,12 @@ def register():
         return render_template("register.html")
 
 @app.route('/biblioteca')
+@login_required
 def biblioteca():
     return render_template('biblioteca.html')
 
 @app.route('/upload', methods=['GET', 'POST'])
+@login_required
 def upload():
     if request.method == 'POST' and 'audio' in request.files:
         return redirect(url_for('biblioteca'))
