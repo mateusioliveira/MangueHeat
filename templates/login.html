@@ -1,1 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    {% if info %}
+        <p>{{ info }}</p>
+    {% endif %}
+    <form method="POST" action="/login">
+        <input type="text" name="username" placeholder="Nome de usuário"><br><br>
+        <input type="password" name="senha" placeholder="Senha"><br><br>
+        <input type="submit" value="Entrar">
+    </form>
+    <p>Não tem uma conta? <a href="/register">Registre-se</a></p>
+</body>
+</html>
 
