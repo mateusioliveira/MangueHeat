@@ -1,1 +1,14 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Biblioteca</title>
+</head>
+<body>
+    <h1>Biblioteca</h1>
+    <ul>
+        {% for musica in musicas %}
+            <li>{{ musica.titulo }} - {{ musica.autor }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
