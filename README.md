@@ -16,6 +16,7 @@ Esse projeto é um site de apoio ao artefato físico Aratuque. Usando Python e o
 
 1. Clone o repositório ou baixe o código-fonte.
 2. Instale “pip install Werkzeug==2.0.1”
+3. Instale "pip install flask-login"
 
 
 ## Uso
