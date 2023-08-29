@@ -33,3 +33,50 @@ Esse projeto é um site de apoio ao artefato físico Aratuque. Usando Python e o
 - Carregar página de arquivo de áudio: "/upload"
 
 O aplicativo usa um banco de dados SQLite chamado "users.db" para armazenar informações do usuário. O banco de dados contém uma tabela de "usuarios" com colunas para ID de usuário, nome de usuário e senha com hash.
+
+   ## Membros
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Thomazrlima">
+        <img src="https://avatars3.githubusercontent.com/Thomazrlima" width="100px;" alt="Foto de Thomaz"/><br>
+        <sub>
+          <b>Thomaz R. Lima</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/mateusioliveira">
+        <img src="https://avatars.githubusercontent.com/u/127619614?v=4;" width="100px;" alt="Foto de Mateus"/><br>
+        <sub>
+          <b>Evaldo G. Filho</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/ViniciusFreitas2801">
+        <img src="https://avatars.githubusercontent.com/u/94134974?v=4" width="100px;" alt="Foto de Vini"/><br>
+        <sub>
+          <b>Pedro S. Souza</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Zabbak">
+        <img src="https://avatars.githubusercontent.com/u/132572270?v=4" width="100px;" alt="Foto de Kabbaz"/><br>
+        <sub>
+          <b>Luiz Eduardo Brayner</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Sofia-Saraiva">
+        <img src="https://avatars.githubusercontent.com/Sofia-Saraiva" width="100px;" alt="Foto de Sofia"/><br>
+        <sub>
+          <b>Sofia Saraiva</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
