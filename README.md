@@ -1,10 +1,10 @@
-# README - Aratuque
+# ARATUQUE 🦀
 
-## Descrição
+## Descrição 📜
 
 Esse projeto é um site de apoio ao artefato físico Aratuque. Usando Python e o framework Flask, ele permite que os usuários se registrem, façam login, saiam e acessem as músicas que produziram no Aratuque.
 
-## Pré-requisitos
+## Pré-requisitos 📑
 
 - Python (versão 3.6 ou superior)
 - Flask (versão 1.1.2 ou superior)
@@ -12,18 +12,18 @@ Esse projeto é um site de apoio ao artefato físico Aratuque. Usando Python e o
 - Werkzeug (versão 2.0.1 ou superior)
 - SQLite 
 
-## Instalação
+## Instalação ⬇️
 
 1. Clone o repositório ou baixe o código-fonte.
 2. Instale “pip install Werkzeug==2.0.1”
 3. Instale "pip install flask-login"
 
 
-## Uso
+## Uso 💻
 1. Rode a aplicacao com `python app.py`.
 2. Acesse o aplicativo em [http://localhost:5000](http://localhost:5000).
 
-## Funcionalidade
+## Funcionalidade 🎧
 
 - Pagina inicial: "/"
 - Pagina de login: "/login"
@@ -34,7 +34,7 @@ Esse projeto é um site de apoio ao artefato físico Aratuque. Usando Python e o
 
 O aplicativo usa um banco de dados SQLite chamado "users.db" para armazenar informações do usuário. O banco de dados contém uma tabela de "usuarios" com colunas para ID de usuário, nome de usuário e senha com hash.
 
-   ## Membros
+   ## Membros 👨‍🏭
 
 <table>
   <tr>
