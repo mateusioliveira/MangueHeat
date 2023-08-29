@@ -50,7 +50,7 @@ O aplicativo usa um banco de dados SQLite chamado "users.db" para armazenar info
       <a href="https://github.com/mateusioliveira">
         <img src="https://avatars.githubusercontent.com/u/127619614?v=4;" width="100px;" alt="Foto de Mateus"/><br>
         <sub>
-          <b>Evaldo G. Filho</b>
+          <b>Mateus Oliveira</b>
         </sub>
       </a>
     </td>
@@ -58,7 +58,7 @@ O aplicativo usa um banco de dados SQLite chamado "users.db" para armazenar info
       <a href="https://github.com/ViniciusFreitas2801">
         <img src="https://avatars.githubusercontent.com/u/94134974?v=4" width="100px;" alt="Foto de Vini"/><br>
         <sub>
-          <b>Pedro S. Souza</b>
+          <b>Vinicius Freitas</b>
         </sub>
       </a>
     </td>
@@ -66,7 +66,7 @@ O aplicativo usa um banco de dados SQLite chamado "users.db" para armazenar info
       <a href="https://github.com/Zabbak">
         <img src="https://avatars.githubusercontent.com/u/132572270?v=4" width="100px;" alt="Foto de Kabbaz"/><br>
         <sub>
-          <b>Luiz Eduardo Brayner</b>
+          <b>Lucas Kabbaz</b>
         </sub>
       </a>
     </td>
