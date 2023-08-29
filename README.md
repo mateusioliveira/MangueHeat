@@ -80,3 +80,7 @@ O aplicativo usa um banco de dados SQLite chamado "users.db" para armazenar info
     </td>
   </tr>
 </table>
+
+## License
+
+[MIT](https://github.com/P-E-N-T-E-S/Kolekto/blob/master/LICENSE.md)
